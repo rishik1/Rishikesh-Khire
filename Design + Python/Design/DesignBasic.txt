@@ -38,6 +38,31 @@ TCP : Transmission Control protocol
     uses multiple Ip packets for sending large amount of data
     TCP Header : Ordering information + checksum
 
+HTTP: Hyper Text transfer protocol
+     Build on top of TCP
+     request response paradigm easy to use
+
+
+Latency Design:
+    Distance between server and client directly proportinl to Latency
+    memory is faster than SSD and SSD faster than HDD and HDD is faser than over network
+
+
+Availability Design:
+    How well is System fault tolerence
+    Operational enough that primary functions are satisfied
+    percentage of System uptime over the year 99.99% and product may not survive.
+    Nines in availability - 2 nines = 99%  , 3 nines = 99.9% , 4 nines = 99.99%
+
+    Go to Availability_Design.png for time over year to percentage availablity  chart.
+
+
+
+
+    
+
+
+
 
 
 
