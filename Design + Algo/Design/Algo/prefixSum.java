@@ -6,7 +6,7 @@ public class prefixSum{ //maximum sum subarray
         System.out.println(" sum of sub array is :: "+ sumSubarray(arr, 2, 4));
     }
 
-    public int sumSubarray(int[] arr , int startIndex , int endIndex){
+    public static int sumSubarray(int[] arr , int startIndex , int endIndex){
 
         int[] sumArray = IntStream.range(0,arr.length)
         .filter(i -> i>=0)
@@ -24,7 +24,7 @@ public class prefixSum{ //maximum sum subarray
     }
 
 
-    public int maxSumSubarray(int[] arr ){
+    public static int maxSumSubarray(int[] arr ){
 
         int[] sumArray = IntStream.range(0,arr.length)
         .filter(i -> i>=0)
