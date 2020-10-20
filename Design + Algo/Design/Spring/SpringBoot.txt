@@ -1,0 +1,131 @@
+Spring helps in plumbing
+Object oriented programming
+DRY => dont repeat yourself principle with one single Configuration and use it everywhere
+POJO - Plain old Java Object ==> Spring called true objects 
+Java Beans - Simple objects with only getter and setters
+Spring beans - > Poho configured in application context
+DTO -> data transport Objects used to transport state betweeen layers
+IOC -> Inversion of Control pattern ==> mechanism of dependency injection
+ApplicationContext - wraps arounf BeanFactory which holds beans in runtime of applications
+
+SprngBoot provide autoconfiguration for applicationContext and various standarized bean servcies
+Rapid development
+No Need to have application server running all the time on server , we can run it anywhere else also or if not needed no need to run
+
+use start.spring.io for spring starter project or use IDE for spring stater project
+it come spre configured and use already existing dependecies 
+
+pom.xml help use to manage dependecies
+<parent> is parent project which you can import already existing dependecies from
+
+
+mvn is used to manage dependencie and run and generate jars : using  " mvn clean install  [--options if any]"
+
+@SpringBootApplication : is configuration beans and enabled auto scanning , done od classes on clas path
+
+@SpringBootTest : is the base test file comes free with Spring boot stater project to test 
+
+
+Spring data - common set of interfaces to access data
+common naming conventions
+provides repository and data mapping conventions
+reducition of boilerplate code 
+Clean mechanism for swapping datat source easier in production environment as only change configuration
+Focus on business logic and less on specific of data base
+Repository Interface : primary interface for interaction with data
+Entity object : proviode data base object as entity with standar functions
+
+
+spring-boot-starter-data : artifact has the standard interface to access databses of various type 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+H2 databse is standard embedded databse uses for doing small Demo or POC generally 
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+
+
+postgressql database can be easily used in SpringBootApplication
+		<dependency>
+			<groupId>com.postgressql</groupId>
+			<artifactId>postgressql</artifactId>
+		</dependency>
+
+application.properties will have configuration
+spring.jpa.hibernate.ddl-auto=none
+logging.level.org.springframework.jdbc.datasource.init.ScriptUtils=debug
+logging.level.org.hiberante.engine.jdbc.env.internal.LobCreatorBuilderImpl=error
+
+spring.jpa.database=postgresql
+spring.datasource.url=jdbc:postgresql://localhost:5432/dev
+spring.datasource.username=postgres
+spring.datasource.data-password=postgresql
+
+
+Dependency injection
+Allows to focus on contracts i.e interfaces 
+clean way to build and consume interaction
+Build abstractions
+clean maintainable code
+
+IoC or Dependency injection done by auto configuration or compoenent scanning to create beans
+Beans instantiated as part of startup life cycle
+Bean factory mainatains handles
+Spring maintains beans lifecycle
+
+@Service is streyoType of componenet scan
+
+@Controller
+@RequestMapping("/reservations")
+
+@Autowired
+
+
+@GetMapping
+public String getReservation(@RequestParam(value="databse,required=false)
+String dateString, Model model){
+	Date date = dateUtils.createDataFromDateString(dateString);
+	List<RoomReservation> RoomReservation = this.reservationService.getRoomReservationForDate(date);
+	model.addAttribute(s:"roomReservations",roomReservations);
+	return "reservations";
+}
+
+
+Rest Controller
+Used for RESTFUL web servcies
+Spring automatically does mashalling and unmarshalling of data for you
+we can also configure to use XML as desired
+
+
+
+@RestController  : for rest Controller
+
+@RestController
+@RequestMapping("api/reservation")
+public class RoomReservationsServiceController{
+
+
+	@Autowired
+	RoomReservationsService RoomReservationsService;
+
+	@GetMapping
+	public List<RoomReservation> getRoomReservationForDate(@RequestParam(name="date" , required=false)
+	String dateString){
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
