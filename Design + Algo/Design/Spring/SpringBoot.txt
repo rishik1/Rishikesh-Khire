@@ -317,7 +317,19 @@ Mono ==> promise of object in future
 
 +++++++++++++++++++++++
 
-Object Wrapper in api response is important 
+==> Object Wrapper in api response is important 
+
+
+++++++++++++++++++
+==> you can add api key to properties value and read it if you want
+
+example
+spring.application.name=mocie-info-Service
+server.port=8082
+
+api.key=cbjasjcbalbcl8121klndlkc
+
++++++++++++++++++++++
 
 
 
