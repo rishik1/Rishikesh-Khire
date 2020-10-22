@@ -313,11 +313,11 @@ Movie movie =webClientBuilder.build()
 
 // converting movie stream async 
 
-Mono ==> prmosie of object in future 
+Mono ==> promise of object in future 
 
 +++++++++++++++++++++++
 
-Object Wrapper inapi response is important 
+Object Wrapper in api response is important 
 
 
 

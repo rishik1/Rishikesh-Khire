@@ -1,0 +1,84 @@
+Discovery server is layer of abstraction
+Services register them to discovery server
+Discovery server is lookup like a phone book
+
+Cons: too much api calls can e slow
+
+Client side service discovery where service register them selves to lookup service
+
+Instead of using client side using disocvery server , use server side discovery server
+This server side service discover will pass the client request to appropriate server
+In server side discovery server the library reside on client 
+
+Spring cloud provider way to cache and use service discovery on client side
+
+netflix Open Source , proxies 
+=> Eureka
+=> Ribbon
+=> Hysterix
+=> Zuul
+
+                                         Client 1,
+Client  --->  DISCOVRY SERVER ---------> Client 2,
+                                         Client 3
+
+Eureka Client depednecy in Spring Cloud
+EUREKA Server 
+    -default eureka server port 8761
+    - http://localhost:8761   
+
+@SpringBootApplication
+@EnableEurekaServer
+public class DiscoveryServer{
+
+}
+
+Make your services as Eureka client as well
+Re routing of api calls using discovery server 
+library are on service discovery
+
+
+
+@SpringBootApplication
+@EnableEurekaClient       //its for servicees 
+@RequestMapping("/users")
+public class ServiceRunninAsDiscoveryClient{
+
+    @Bean
+    @LoadBalanced           //client side Load Balancing 
+    public RestTemplate getRestTemplate(){
+        return new RestTemplate();
+    }
+
+    @Autowired
+    private DiscoveryClient discoveryClient; //advanced load balancing by overriding interface but @LoadBalanced can handle
+
+        @RequestMapping("/{userId})
+        public List<CatalogItem> getCatalog(@PathVariable("userId") string userId){
+
+            UserRating anotherServiceUserRatingsItems = this.restTemplate.getForObject("http://ratings-data-service/ratings/data/users"+userId,Userratings.class);
+
+        }
+
+}
+
+proerties
+//if only 1 and only 1 server you can dd following properties
+eureka.client/register-with-eureka=false
+eureka.cleint.fetch-registery=false
+
+
+=> JaxB -java XML depricated from jaav 8 so not supported in java 11 you will have to delirately add it.
+
+=> running jar on different port 
+command/> java -Dserver.port=8201 -jar < Jar Name.jar >
+
+
+
+HEART BEAT protocol  for FAULT tolerance
+=> Eureka clinet ping server "I am alive" <==> Discovery Eureka Server   keeps pining to check is the server is there
+=> If server does not get "I am alive by Client" its removed from service registery
+=> I server went does Cache is present to provide response until server is re instated
+
+=> These failt tolerenace is done by spring cloud Eureka by default
+
