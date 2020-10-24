@@ -114,12 +114,31 @@ public class RoomReservationsServiceController{
 	@Autowired
 	RoomReservationsService RoomReservationsService;
 
-	@GetMapping
+	@GetMapping						
 	public List<RoomReservation> getRoomReservationForDate(@RequestParam(name="date" , required=false)
 	String dateString){
 
 	}
 
+	@RequestMapping("/roomReservation/{roomId}")
+	public RoomReservation getRoomReservationById(@PathVariable("roomId") string roomId`){
+		return RoomReservationsService.getRoomReservationById(roomId);
+	}
+
+	@RequestMapping(method =RequestMethod.POST , value="/roomReservation")
+	public void addRoomReservation(@ResquestBody RoomReservation roomReservation){
+		RoomReservationsService.addRoomReservation(roomReservation);
+	}
+
+	@RequestMapping(method= RequestMethod.PUT , value="/roomReservation/{roomId}")
+    public void updateRoomReservation(@RequestBodey RoomReservation roomReservation ,@PathVariable String roomId){
+		RoomReservationsService.save(roomReservation);
+	}
+ 
+	@RequestMappping(method=RequestMethod.DELETE ,value="/roomReservation/{roomId}")
+	public void deleteRoomReservation(@PathVariable String roomId){
+		RoomReservationsService.deleteRoomReservation(roomId);
+	}
 }
 
 
@@ -330,6 +349,19 @@ server.port=8082
 api.key=cbjasjcbalbcl8121klndlkc
 
 +++++++++++++++++++++
+
+
+Another way of running spring Boot application
+
+@SpringBootApplication
+public Class springBoot{
+
+	public static void main(String[] args){
+		springApplication.run(springBoot.class, args);
+	}
+	
+}
+
 
 
 
