@@ -81,4 +81,12 @@ HEART BEAT protocol  for FAULT tolerance
 => I server went does Cache is present to provide response until server is re instated
 
 => These failt tolerenace is done by spring cloud Eureka by default
+=> Lots of microservices
+=> environment specific values
+=> QA database for QA task
+=> consistent across all aplication
+=> Version History monitoring and track the values can be pro or cons
+=> Real time amangement : thread control
+=> taking a value from proerty file and use it in SpringBootApplication
+=> 
 

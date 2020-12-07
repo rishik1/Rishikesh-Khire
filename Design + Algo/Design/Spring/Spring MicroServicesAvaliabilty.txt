@@ -150,6 +150,20 @@ commandProperties={
 
 
 
++++++++++ microservices configuration ++++++++++
+Seperation of code and config
+Easily changeable values
+Databse connections in configuration server
+credentials in configuration server
+Feature getFallbackUserRatingBusiness logic configuration
+Scenario testing => traffic re routing 10% , 20% , 30%
+Spring Boot configuration ==> Hytrix connection timeout
+
+
+
+
+
+
 
 
 
