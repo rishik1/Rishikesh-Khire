@@ -1,0 +1,70 @@
+# SUMMARY
+=> This is to simulate port binding :binding physical server port to docker container port
+=> docker run -p6000:6379 <image name >      binds the physical server 6000 port to containers 6379 port 
+=> ex docer run -p6000:6379 redis 
+=> docker run -d -p6000:6379 redis              binds and runs docker image in detached mode and binds to 600 physical server port to 6379 container port
+
+
+PS C:\Users\rkhire\Documents\project\projects> docker ps 
+CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS              PORTS                NAMES
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   2 minutes ago        Up 2 minutes        0.0.0.0:80->80/tcp   awesome_noether
+0be362d0e20b3176bc492711084fba1dcd160e056f3776715efef961d1c83d31
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                NAMES
+0be362d0e20b        redis                    "docker-entrypoint.s…"   6 seconds ago       Up 4 seconds        6379/tcp             pensive_bardeen
+PS C:\Users\rkhire\Documents\project\projects> docker run redis:4.0
+Unable to find image 'redis:4.0' locally
+4.0: Pulling from library/redis
+54fec2fa59d0: Pull complete
+7988789e1fb7: Pull complete
+8ce1bab2086c: Pull complete
+40e134f79af1: Pull complete
+Digest: sha256:2e03fdd159f4a08d2165ca1c92adde438ae4e3e6b0f74322ce013a78ee81c88d
+Status: Downloaded newer image for redis:4.0
+1:C 01 Jan 17:17:52.658 # Redis version=4.0.14, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 01 Jan 17:17:52.658 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+tl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 01 Jan 17:17:52.660 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must 
+be restarted after THP is disabled.
+1:M 01 Jan 17:17:52.660 * Ready to accept connections
+PS C:\Users\rkhire\Documents\project\projects>
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                NAMES
+045728b24a72        redis:4.0                "docker-entrypoint.s…"   8 seconds ago       Up 6 seconds        6379/tcp             wizardly_meninsky
+0be362d0e20b        redis                    "docker-entrypoint.s…"   3 minutes ago       Up 3 minutes        6379/tcp             pensive_bardeen
+18e1cf9ae024        redis                    "docker-entrypoint.s…"   5 minutes ago       Up 2 minutes        6379/tcp             elated_ganguly
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   7 minutes ago       Up 7 minutes        0.0.0.0:80->80/tcp   awesome_noether
+PS C:\Users\rkhire\Documents\project\projects> docker pulls and runs the image with verison
+docker: 'pulls' is not a docker command.
+See 'docker --help'
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker run -p6000:6379
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run a command in a new container
+PS C:\Users\rkhire\Documents\project\projects> docker run -p6000:6379 redis
+1:C 01 Jan 2021 17:25:27.614 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 01 Jan 2021 17:25:27.614 # Redis version=6.0.9, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 01 Jan 2021 17:25:27.614 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 01 Jan 2021 17:25:27.616 * Running mode=standalone, port=6379.
+1:M 01 Jan 2021 17:25:27.616 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+1:M 01 Jan 2021 17:25:27.616 # Server initialized
+1:M 01 Jan 2021 17:25:27.616 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 01 Jan 2021 17:25:27.617 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+1:M 01 Jan 2021 17:25:27.618 * Ready to accept connections
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                    NAMES
+362b33e6c06a        redis                    "docker-entrypoint.s…"   10 seconds ago      Up 9 seconds        0.0.0.0:6000->6379/tcp   happy_beaver
+045728b24a72        redis:4.0                "docker-entrypoint.s…"   7 minutes ago       Up 7 minutes        6379/tcp                 wizardly_meninsky
+0be362d0e20b        redis                    "docker-entrypoint.s…"   10 minutes ago      Up 10 minutes       6379/tcp                 pensive_bardeen
+18e1cf9ae024        redis                    "docker-entrypoint.s…"   13 minutes ago      Up 9 minutes        6379/tcp                 elated_ganguly
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   14 minutes ago      Up 14 minutes       0.0.0.0:80->80/tcp       awesome_noether
+
+
+# When tried to attach new container to same physical server port which is already used by another container would give error condition.
+PS C:\Users\rkhire\Documents\project\projects> docker run -p6000:6379 redis:4.0
+docker: Error response from daemon: driver failed programming external connectivity on endpoint peaceful_joliot (7e786cca3e5557102fb05536e2c49b3b266eda57e1b5313b0c2d1f7c4bc10e5f): Bind for 0.0.0.0:6000 failed: port is already allocated.
+PS C:\Users\rkhire\Documents\project\projects>

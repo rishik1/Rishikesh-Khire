@@ -1,0 +1,247 @@
+-Java config easir and complie time checking of beans created, instead of runtime.
+-Bean factory maintains the singleton beans instances.
+-Application context is container aread which encapsulated bean factory.
+-XML configuration is being depricated but provide granular handling but is runtime configuration on beans wihout complie time checking
+-Compile time checking
+-Spring-core (artificat) dependecy comes from org.springframework
+-spring-context dependecy has the beanfactory
+-configuration is done inApplicationConfig java class
+- @configuration annotation used for bean configuration file
+- ApplicationContext contex = new ApplicationConfigApplicationContext(ApplicationConfig.class);
+- Bean objectBean = context.getBean("className.class"); provudes the bean handle from application context
+- @PropoertySource("classpath:application.properties") 
+-property source must be in resources directory use property source as key value pair of properties where key is use as place holder
+to create @value("{propertyName}") bean in the configuration bean
+- Profiles are used for different application user profiles and can change bheavior according to profiles
+-  profile tags are used as VM arguments or program arguments as you choose  as 
+-Dspring.profiles.active=prod
+or -Dspring.profiles.active=dev
+or -Dspirng.profiles.active=Qa
+- based on arguments of profile you can choose the bean bheavior
+
+@Bean
+@Profile("!dev")
+public TimeService timeService(){
+    return new TimeService(is24:true);
+}
+
+@Bean
+@Profile("dev")
+public TimeService timeService(){
+    return new TimeService(is24:false);
+}
+
+-Spring Expression Language give ability to use configuration based on place holders
+- use "#" for spring expression Language
+
+@Value("#{new Boolean(environment['spring.profiles.active']!='dev')}")
+private boolean is24;
+
+-Bean scopes : Singleton, prototype Session  Request beans
+- default scope is singleton , which single per context
+- state data of singleton is important 
+
+- prototype bean new bean is created everytime refernced , if noe refernce left its available for garbage collections
+- definition is storage in Ioc container but instance is not.
+ 
+- Session beans are similar to prototype beans , only used in web environments 
+- Session bean is 1 instance of bean per user Session
+- definition is storage in Ioc container but instance is not.
+
+- Request bean for web environment only
+- 1 bean per request , definition is storage in Ioc container but instance is not.
+
+Proxies 
+- In spring everthing is a proxy added in Spring 4.0
+- Spring used JDK and CGLib proxies in the operations
+- proxies are used for adding a behavior when a call is passed through them
+- private method does not expose the original behavior
+
+-Componenet Scanning
+- Compoenent scanning can solve configuration most of the times.
+- annotation is @Componenet , means class must be loaded in bean factory 
+- @Componenet is root annotation other types are also there
+- Scane the base and sub packages to load configuration automatically and build dependecy graph
+- Dependency inject is achiveed by componenet cacnning
+- autowired is used for dependecny injection @autowired
+- more than 1 bean of same type @Qualifire ---> very hard to maintain dont use its
+- POM.XML is used to satrt component scannning
+- Base package is defined for component scanning
+- By defined constructor is used for bean creation So you must pass the constructore argument , hence you dont have to use @Autowired annotion on consturctor.
+- if no constructore is present default constructore is used by spring to autowiring.
+
+
+
+- @Service is streyotype of @componenet used to define a Service
+
+@ComponenetScan(basePackages= "com.rishi.basepackage") on configuration class or use XML in app-context.XML
+
+-Lifecycle Methods
+- startup or shutdown lifecycle Methods
+- construction or destrcution phase
+- they use JSR-250 annotion and not spring Methods
+- @PostConstruct : perform some opertion after contructor is called , takes no parameters initalization 
+-
+@PostConstruct
+public void init(){
+
+}
+
+
+-Pre Destroy : called just before garbage collector destroys the bean : ApplicationContext closes
+- this does not take any parameter not part of spring
+- annotion @PreDestroy
+
+@PreDestroypublic void destroy(){
+    // do dome closing work
+}
+
+Lifecycle of Spring
+three phases of lifecycle
+# Initalization Phase
+- Application Context is created
+- Bean Factory initalization and Instantion 
+- load all bean definition  => java config xml or Autoconfiguration using scanning 
+- If any Post process bean definition do that ==> post process on entire bean factory (BeanFactoryPostProcess interfacte used for this )
+- most beans are eager loading
+- Instantiate bean , setter are called and used for dependency injection
+- property Injection happens when setters are called 
+- constructor injection happens when bean is instantiated
+- Best practice is to inject beans as contructor arguments for better design
+- pre Init bean methods called
+- Initalized
+- post Init bean method called BeanPostProcessor Interface or use annotion @PostConstruct
+- bean is ready to use available in bean factory
+
+# Use phase
+- Application Context maintains handle to each bean and server proxies beans to application
+- ApplicationContextAware Interface gives handle to applicationContext
+
+# Destruction phase
+- when close is called on ApplicationContext
+- @preDestroy methods is used to do any pre processing or closing before bean Destruction
+- beans are only destoryed by garbage collector
+- beans are not destoryed they are de refrenced and picked up by GC to destroy
+
+
+Aspect J
+- Resuable blocks of code that can be injected into application runtime
+- adding special behavior 
+- mainly used for cross cutting concerns at one spot
+- avoid code deduplication
+- example logging every thred uses it
+- Spring is dynamic proxy based aspects for run time interweaving
+- Joint Point : cross cutting cornern can be applied in the Business logic at this Point
+- Point Cut - routine to select Joint Point to be applied to cross cutting concerns
+- Advice - applied to Joint Point when selected by Pointcut
+- Aspectjweaver dependecy from org.aspectj group 
+- @Aspect 
+- @Pointcut("@annotion(Loggable))
+- @EnableAspectJAutoProxy 
+- @Before("executeLoggin()")  ==> before  Advice
+- @AfterReturning
+- @AfterThrowing
+
+
+
+
+@Pointcut("@annotation(Loggable)")
+public void executeLoggin(){}
+
+@Before("executeLogging()")
+public void logMethodCall(JointPoint joinPoint){
+    joinPoint.getSignature.getName()
+    object[]  args = joinPoint.getArgs();
+    if(null!=args 7& args.length>0){
+        message.append("args=[");
+        Arrays.asList(args).forEach(args ->{
+            message.appaend(arg).append((" | "));
+        });
+         message.append("]");
+    }
+}
+
+
+@AfterReturning(value = "executeLogging()" , returning = "returValue" )
+public void logMethodCall(JointPoint joinPoint , Object returnValue){
+    joinPoint.getSignature.getName()
+    object[]  args = joinPoint.getArgs();
+    if(null!=args 7& args.length>0){
+        message.append("args=[");
+        Arrays.asList(args).forEach(args ->{
+            message.appaend(arg).append((" | "));
+        });
+         message.append("]");
+    }
+
+    if(returnValue instanceof Collection){
+        message.appaend(" returning "+  retrunValue);
+    }
+}
+
+
+@AfterAround(value = "executeLogging()" )
+public Object logMethodCall(ProceedingJointPoint joinPoint ){
+
+    Object returnValue = joinPoint.proceed(); //actual call made to advice method
+
+    String name =joinPoint.getSignature.getName();
+    object[]  args = joinPoint.getArgs();
+    if(null!=args 7& args.length>0){
+        message.append("args=[");
+        Arrays.asList(args).forEach(args ->{
+            message.appaend(arg).append((" | "));
+        });
+         message.append("]");
+    }
+
+    if(returnValue instanceof Collection){
+        message.appaend(" returning "+  retrunValue);
+    }
+}
+
+
+
+
+
+public class GreetingService{
+
+@Value("${app.greeting}")
+private String greeting;
+
+public GreetingService(){super();}
+
+@Loggable
+public String getGreeting(String name){
+    return greeting + " "+ name;
+}
+
+
+
+Pointcut syntax
+designator(" r p.c.m.(arg)")
+r is return trype
+p is package
+c is class
+m is methods
+arg is arguments
+
+execution : expression for matching method execution
+within : expression for matching within certain type
+target : exprssion for matchinf specific type
+
+@annotation : expression for matching a specific annotion
+
+
+
+
+
+
+
+
+
+
+
+
+
+

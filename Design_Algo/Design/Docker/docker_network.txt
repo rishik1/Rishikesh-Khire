@@ -1,0 +1,70 @@
+Docker containers running in default or isloated network can talk with each other just by using container names
+the outside world can talk to containers via REST apis using localhost/HOST ip address and port number of host opened for container
+
+
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+05f33f35d95e        bridge              bridge              local
+8c8d41610d44        host                host                local
+6138b1835b50        none                null                local
+
+
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> docker network create mongo-network
+e07bae085893f5f9ba05bd9e1f5b9d64e523e98a5d144b93df1a682fcc112eba
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> docker network ls 
+NETWORK ID          NAME                DRIVER              SCOPE
+05f33f35d95e        bridge              bridge              local
+8c8d41610d44        host                host                local
+e07bae085893        mongo-network       bridge              local
+6138b1835b50        none                null                local
+
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> docker run -d -p27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=rishi123 --name mongoDB --net mongo-network  mongo
+e73bd0e06d2e76ff7d006fc60f5e2931c3225eb88220c373df47ee7010b2c165
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
+e73bd0e06d2e        mongo               "docker-entrypoint.s…"   14 seconds ago      Up 13 seconds       0.0.0.0:27017->27017/tcp   mongoDB
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn>
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> docker logs
+"docker logs" requires exactly 1 argument.
+See 'docker logs --help'.
+
+Usage:  docker logs [OPTIONS] CONTAINER
+
+Fetch the logs of a container
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> docker logs e73bd0e06d2e
+
+
+
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> docker images
+REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE
+mongo-express            latest              6df8f457a22a        2 weeks ago         130MB
+redis                    latest              ef47f3b6dc11        3 weeks ago         104MB
+mongo                    latest              3068f6bb852e        3 weeks ago         493MB
+docker/getting-started   latest              021a1b85e641        3 weeks ago         27.6MB
+redis                    4.0                 191c4017dcdd        8 months ago        89.3MB
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn>
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn>
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> docker run --net mongo-network -p 8081:8081 -e ME_CONFIG_MONGODB_ADMINUSERNAME="admin" -e ME_CONFIG_MONGODB_ADMINPASSWORD="rishi123" -e ME_CONFIG_MONGODB_SERVER="mongoDB" mongo-express
+
+
+Mongo Express server listening at http://0.0.0.0:8081
+Server is open to allow connections from anyone (0.0.0.0)
+basicAuth credentials are "admin:pass", it is recommended you change this in your config.js!
+Database connected
+Admin Database connected
+GET / 200 124.855 ms - 8929
+GET /public/css/bootstrap.min.css 200 7.385 ms - 121457
+GET /public/css/style.css 200 11.201 ms - 1883
+GET /public/css/bootstrap-theme.min.css 200 11.966 ms - 23411
+GET /public/index-0d94eb863f41a0adfbe0.min.js 200 6.553 ms - 1033
+GET /public/vendor-a6502aaae055f01bdcc3.min.js 200 7.030 ms - 130496
+GET /public/img/mongo-express-logo.png 200 0.969 ms - 17847
+GET /public/fonts/glyphicons-halflings-regular.woff2 200 1.213 ms - 18028
+GET /public/img/gears.gif 200 0.929 ms - 50281
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn>
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn>
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> docker ps 
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                      NAMES
+dd71d9768201        mongo-express       "tini -- /docker-ent…"   About a minute ago   Up 59 seconds       0.0.0.0:8081->8081/tcp     naughty_wiles
+e73bd0e06d2e        mongo               "docker-entrypoint.s…"   12 minutes ago       Up 12 minutes       0.0.0.0:27017->27017/tcp   mongoDB
+PS C:\Users\rkhire\Documents\project\projects\Design + Algo\Design\Docker\docker_handsOn> 

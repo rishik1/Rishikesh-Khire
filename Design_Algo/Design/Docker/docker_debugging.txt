@@ -1,0 +1,69 @@
+SUMMARY
+=> docker logs <container name/ ID>
+=> docker run -d -p6001:6379 --name redis-older redis:4.0
+=> docker logs redis-older
+=> docker exec -it <container id> /bin/bash    ==> open the shell using exec command 
+=> You cannot run Linux based docker image for host with windows os /kernel true for windows verison below 10 and older mac os verison
+=> so previously kernel compatbility with docker images was an issue
+=> Docker tool box abstract the kernel to allows run linux images on windows kernel 
+WORKFLOW ==> Docker Hub => pull image => write code java or javascript => commit to git => CI continuious integration will generate image =>
+    tester will deploy and test.
+=> jenkins build create docker images ==> pushed to private docker repository
+=> 
+
+
+
+
+
+
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                    NAMES
+0d8764b7f41d        redis:4.0                "docker-entrypoint.s…"   13 minutes ago      Created                                      peaceful_joliot
+362b33e6c06a        redis                    "docker-entrypoint.s…"   16 minutes ago      Up 16 minutes       0.0.0.0:6000->6379/tcp   happy_beaver
+045728b24a72        redis:4.0                "docker-entrypoint.s…"   23 minutes ago      Up 23 minutes       6379/tcp                 wizardly_meninsky
+0be362d0e20b        redis                    "docker-entrypoint.s…"   26 minutes ago      Up 26 minutes       6379/tcp                 pensive_bardeen
+18e1cf9ae024        redis                    "docker-entrypoint.s…"   29 minutes ago      Up 25 minutes       6379/tcp                 elated_ganguly
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   30 minutes ago      Up 30 minutes       0.0.0.0:80->80/tcp       awesome_noether
+
+
+PS C:\Users\rkhire\Documents\project\projects> docker logs 362b33e6c06a
+1:C 01 Jan 2021 17:25:27.614 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 01 Jan 2021 17:25:27.614 # Redis version=6.0.9, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 01 Jan 2021 17:25:27.614 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 01 Jan 2021 17:25:27.616 * Running mode=standalone, port=6379.
+1:M 01 Jan 2021 17:25:27.616 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+1:M 01 Jan 2021 17:25:27.616 # Server initialized
+1:M 01 Jan 2021 17:25:27.616 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 01 Jan 2021 17:25:27.617 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+1:M 01 Jan 2021 17:25:27.618 * Ready to accept connections
+PS C:\Users\rkhire\Documents\project\projects> 
+
+
+PS C:\Users\rkhire\Documents\project\projects> docker ps 
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                    NAMES
+362b33e6c06a        redis                    "docker-entrypoint.s…"   26 minutes ago      Up 26 minutes       0.0.0.0:6000->6379/tcp   happy_beaver
+045728b24a72        redis:4.0                "docker-entrypoint.s…"   34 minutes ago      Up 34 minutes       6379/tcp                 wizardly_meninsky
+0be362d0e20b        redis                    "docker-entrypoint.s…"   37 minutes ago      Up 37 minutes       6379/tcp                 pensive_bardeen
+18e1cf9ae024        redis                    "docker-entrypoint.s…"   40 minutes ago      Up 36 minutes       6379/tcp                 elated_ganguly
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   41 minutes ago      Up 41 minutes       0.0.0.0:80->80/tcp       awesome_noether
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker exec -it 362b33e6c06a /bin/bash
+root@362b33e6c06a:/data# 
+root@362b33e6c06a:/data#
+root@362b33e6c06a:/data# ls -al
+total 8
+drwxr-xr-x 2 redis redis 4096 Dec 11 16:24 .
+drwxr-xr-x 1 root  root  4096 Jan  1 17:25 ..
+root@362b33e6c06a:/data# pwd
+/data
+root@362b33e6c06a:/data# cd ..
+root@362b33e6c06a:/# ll
+bash: ll: command not found
+root@362b33e6c06a:/# cd ..
+root@362b33e6c06a:/# cd  /home/
+root@362b33e6c06a:/home# ls -al
+total 8
+drwxr-xr-x 2 root root 4096 Nov 22 12:37 .
+drwxr-xr-x 1 root root 4096 Jan  1 17:25 ..
+root@362b33e6c06a:/home#

@@ -1,0 +1,224 @@
+# SUMMARY
+=> docker pull <image name>   pulls the docker images from docker hub
+=> docker run <image name>    pulls and run the docker image from docker hub and jumps to container command line
+=> docker run -d <image name>  pulls and runs the docker image from docker hub in DETACHED mode
+=> docker ps    list the docker processes Running
+=> docker ps -a    lists the running and stooped and other states docker processes
+=> docker start <image name>    you can start image by ID
+=> docker stop <container id >   stop the running container
+
+
+
+
+
+
+
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+Unable to find image 'docker/getting-started:latest' locally
+latest: Pulling from docker/getting-started
+188c0c94c7c5: Pull complete
+617561f33ec6: Pull complete
+7d856acdaa9c: Pull complete
+a0d3c6e28e6d: Pull complete
+af69a9b963c8: Pull complete
+0739f3815ad8: Pull complete
+7c7b75d0baf8: Pull complete
+Digest: sha256:b821569034e3b5fae03b40e64a866017067f3bf17effe185b782bdbf02179528
+Status: Downloaded newer image for docker/getting-started:latest
+PS C:\Users\rkhire\Documents\project\projects> 
+PS C:\Users\rkhire\Documents\project\projects> 
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                NAMES
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   18 seconds ago      Up 17 seconds       0.0.0.0:80->80/tcp   awesome_noether
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker pull redis
+Using default tag: latest
+6ec7b7d162b2: Pull complete
+1f81a70aa4c8: Pull complete
+968aa38ff012: Pull complete
+884c313d5b0b: Pull complete
+6e858785fea5: Pull complete
+78bcc34f027b: Pull complete
+Digest: sha256:0f724af268d0d3f5fb1d6b33fc22127ba5cbca2d58523b286ed3122db0dc5381
+Status: Downloaded newer image for redis:latest
+docker.io/library/redis:latest
+PS C:\Users\rkhire\Documents\project\projects> docks images
+docks : The term 'docks' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify  
+that the path is correct and try again.
+At line:1 char:1
++ docks images
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (docks:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\Users\rkhire\Documents\project\projects> docker image
+
+
+Manage images
+
+  history     Show the history of an image
+  import      Import the contents from a tarball to create a filesystem image
+  inspect     Display detailed information on one or more images
+  load        Load an image from a tar archive or STDIN
+  ls          List images
+  prune       Remove unused images
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rm          Remove one or more images
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+
+redis                    latest              ef47f3b6dc11        3 weeks ago         104MB
+docker/getting-started   latest              021a1b85e641        3 weeks ago         27.6MB
+PS C:\Users\rkhire\Documents\project\projects>
+1:C 01 Jan 2021 17:12:07.381 # Redis version=6.0.9, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 01 Jan 2021 17:12:07.381 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 01 Jan 2021 17:12:07.382 * Running mode=standalone, port=6379.
+1:M 01 Jan 2021 17:12:07.383 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc1:M 01 Jan 2021 17:12:07.383 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+1:M 01 Jan 2021 17:12:07.384 * Ready to accept connections
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                NAMES
+18e1cf9ae024        redis                    "docker-entrypoint.s…"   46 seconds ago      Up 43 seconds       6379/tcp             elated_ganguly
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   2 minutes ago       Up 2 minutes        0.0.0.0:80->80/tcp   awesome_noether
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker ps 
+CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS              PORTS                NAMES
+18e1cf9ae024        redis                    "docker-entrypoint.s…"   About a minute ago   Up About a minute   6379/tcp             elated_ganguly
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   2 minutes ago        Up 2 minutes        0.0.0.0:80->80/tcp   awesome_noether
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker run -d redis
+0be362d0e20b3176bc492711084fba1dcd160e056f3776715efef961d1c83d31
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                NAMES
+0be362d0e20b        redis                    "docker-entrypoint.s…"   6 seconds ago       Up 4 seconds        6379/tcp             pensive_bardeen
+18e1cf9ae024        redis                    "docker-entrypoint.s…"   2 minutes ago       Up 2 minutes        6379/tcp             elated_ganguly
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   4 minutes ago       Up 4 minutes        0.0.0.0:80->80/tcp   awesome_noether
+PS C:\Users\rkhire\Documents\project\projects>
+
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker stop 18e1cf9ae024
+18e1cf9ae024
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS                     PORTS                NAMES
+0be362d0e20b        redis                    "docker-entrypoint.s…"   About a minute ago   Up 59 seconds              6379/tcp             pensive_bardeen
+18e1cf9ae024        redis                    "docker-entrypoint.s…"   3 minutes ago        Exited (0) 4 seconds ago                        elated_ganguly
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   4 minutes ago        Up 4 minutes               0.0.0.0:80->80/tcp   awesome_noether
+PS C:\Users\rkhire\Documents\project\projects> docker start 18e1cf9ae024
+18e1cf9ae024
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS              PORTS                NAMES
+0be362d0e20b        redis                    "docker-entrypoint.s…"   About a minute ago   Up About a minute   6379/tcp             pensive_bardeen
+18e1cf9ae024        redis                    "docker-entrypoint.s…"   3 minutes ago        Up 4 seconds        6379/tcp             elated_ganguly
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   5 minutes ago        Up 5 minutes        0.0.0.0:80->80/tcp   awesome_noether
+PS C:\Users\rkhire\Documents\project\projects> 
+
+
+Windows PowerShell
+Copyright (C) Microsoft Corporatio
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+Unable to find image 'docker/getting-started:latest' locally
+latest: Pulling from docker/getting-started
+188c0c94c7c5: Pull complete
+617561f33ec6: Pull complete
+7d856acdaa9c: Pull complete
+a0d3c6e28e6d: Pull complete
+af69a9b963c8: Pull complete
+0739f3815ad8: Pull complete
+7c7b75d0baf8: Pull complete
+Digest: sha256:b821569034e3b5fae03b40e64a866017067f3bf17effe185b782bdbf02179528
+Status: Downloaded newer image for docker/getting-started:latest
+PS C:\Users\rkhire\Documents\project\projects> 
+PS C:\Users\rkhire\Documents\project\projects> 
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                NAMES
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   18 seconds ago      Up 17 seconds       0.0.0.0:80->80/tcp   awesome_noether
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker pull redis
+Using default tag: latest
+6ec7b7d162b2: Pull complete
+1f81a70aa4c8: Pull complete
+968aa38ff012: Pull complete
+884c313d5b0b: Pull complete
+6e858785fea5: Pull complete
+78bcc34f027b: Pull complete
+Digest: sha256:0f724af268d0d3f5fb1d6b33fc22127ba5cbca2d58523b286ed3122db0dc5381
+Status: Downloaded newer image for redis:latest
+docker.io/library/redis:latest
+PS C:\Users\rkhire\Documents\project\projects> docks images
+docks : The term 'docks' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify  
+that the path is correct and try again.
+At line:1 char:1
++ docks images
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (docks:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\Users\rkhire\Documents\project\projects> docker image
+
+
+Manage images
+
+  history     Show the history of an image
+  import      Import the contents from a tarball to create a filesystem image
+  inspect     Display detailed information on one or more images
+  load        Load an image from a tar archive or STDIN
+  ls          List images
+  prune       Remove unused images
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rm          Remove one or more images
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+
+redis                    latest              ef47f3b6dc11        3 weeks ago         104MB
+docker/getting-started   latest              021a1b85e641        3 weeks ago         27.6MB
+PS C:\Users\rkhire\Documents\project\projects>
+1:C 01 Jan 2021 17:12:07.381 # Redis version=6.0.9, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 01 Jan 2021 17:12:07.381 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 01 Jan 2021 17:12:07.382 * Running mode=standalone, port=6379.
+1:M 01 Jan 2021 17:12:07.383 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc1:M 01 Jan 2021 17:12:07.383 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+1:M 01 Jan 2021 17:12:07.384 * Ready to accept connections
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   2 minutes ago       Up 2 minutes        0.0.0.0:80->80/tcp   awesome_noether
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker ps 
+CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS              PORTS                NAMES
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   2 minutes ago        Up 2 minutes        0.0.0.0:80->80/tcp   awesome_noether
+0be362d0e20b3176bc492711084fba1dcd160e056f3776715efef961d1c83d31
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                NAMES
+0be362d0e20b        redis                    "docker-entrypoint.s…"   6 seconds ago       Up 4 seconds        6379/tcp             pensive_bardeen
+
+
+PS C:\Users\rkhire\Documents\project\projects> docker run redis:4.0
+Unable to find image 'redis:4.0' locally
+4.0: Pulling from library/redis
+54fec2fa59d0: Pull complete
+7988789e1fb7: Pull complete
+8ce1bab2086c: Pull complete
+40e134f79af1: Pull complete
+Digest: sha256:2e03fdd159f4a08d2165ca1c92adde438ae4e3e6b0f74322ce013a78ee81c88d
+Status: Downloaded newer image for redis:4.0
+1:C 01 Jan 17:17:52.658 # Redis version=4.0.14, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 01 Jan 17:17:52.658 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 01 Jan 17:17:52.659 * Running mode=standalone, port=6379.
+1:M 01 Jan 17:17:52.660 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+1:M 01 Jan 17:17:52.660 # Server initialized
+1:M 01 Jan 17:17:52.660 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 01 Jan 17:17:52.660 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must 
+be restarted after THP is disabled.
+1:M 01 Jan 17:17:52.660 * Ready to accept connections
+PS C:\Users\rkhire\Documents\project\projects>
+PS C:\Users\rkhire\Documents\project\projects> docker ps -a
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                NAMES
+045728b24a72        redis:4.0                "docker-entrypoint.s…"   8 seconds ago       Up 6 seconds        6379/tcp             wizardly_meninsky
+0be362d0e20b        redis                    "docker-entrypoint.s…"   3 minutes ago       Up 3 minutes        6379/tcp             pensive_bardeen
+18e1cf9ae024        redis                    "docker-entrypoint.s…"   5 minutes ago       Up 2 minutes        6379/tcp             elated_ganguly
+f799a9ab0b17        docker/getting-started   "/docker-entrypoint.…"   7 minutes ago       Up 7 minutes        0.0.0.0:80->80/tcp   awesome_noether
+PS C:\Users\rkhire\Documents\project\projects> docker pulls and runs the image with verison
+docker: 'pulls' is not a docker command.
+See 'docker --help'

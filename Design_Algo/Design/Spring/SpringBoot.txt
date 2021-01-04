@@ -1,0 +1,400 @@
+Spring helps in plumbing
+Object oriented programming
+DRY => dont repeat yourself principle with one single Configuration and use it everywhere
+POJO - Plain old Java Object ==> Spring called true objects 
+Java Beans - Simple objects with only getter and setters
+Spring beans - > Poho configured in application context
+DTO -> data transport Objects used to transport state betweeen layers
+IOC -> Inversion of Control pattern ==> mechanism of dependency injection
+ApplicationContext - wraps arounf BeanFactory which holds beans in runtime of applications
+
+SprngBoot provide autoconfiguration for applicationContext and various standarized bean servcies
+Rapid development
+No Need to have application server running all the time on server , we can run it anywhere else also or if not needed no need to run
+
+https://start.spring.io used for spring initalizer 
+
+use start.spring.io for spring starter project or use IDE for spring stater project
+it come spre configured and use already existing dependecies 
+
+pom.xml help use to manage dependecies
+<parent> is parent project which you can import already existing dependecies from
+
+
+mvn is used to manage dependencie and run and generate jars : using  " mvn clean install  [--options if any]"
+
+@SpringBootApplication : is configuration beans and enabled auto scanning , done od classes on clas path
+
+@SpringBootTest : is the base test file comes free with Spring boot stater project to test 
+
+
+Spring data - common set of interfaces to access data
+common naming conventions
+provides repository and data mapping conventions
+reducition of boilerplate code 
+Clean mechanism for swapping datat source easier in production environment as only change configuration
+Focus on business logic and less on specific of data base
+Repository Interface : primary interface for interaction with data
+Entity object : proviode data base object as entity with standar functions
+
+
+spring-boot-starter-data : artifact has the standard interface to access databses of various type 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+H2 databse is standard embedded databse uses for doing small Demo or POC generally 
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+
+
+postgressql database can be easily used in SpringBootApplication
+		<dependency>
+			<groupId>com.postgressql</groupId>
+			<artifactId>postgressql</artifactId>
+		</dependency>
+
+application.properties will have configuration
+spring.jpa.hibernate.ddl-auto=none
+logging.level.org.springframework.jdbc.datasource.init.ScriptUtils=debug
+logging.level.org.hiberante.engine.jdbc.env.internal.LobCreatorBuilderImpl=error
+
+spring.jpa.database=postgresql
+spring.datasource.url=jdbc:postgresql://localhost:5432/dev
+spring.datasource.username=postgres
+spring.datasource.data-password=postgresql
+
+
+Dependency injection
+Allows to focus on contracts i.e interfaces 
+clean way to build and consume interaction
+Build abstractions
+clean maintainable code
+
+IoC or Dependency injection done by auto configuration or compoenent scanning to create beans
+Beans instantiated as part of startup life cycle
+Bean factory mainatains handles
+Spring maintains beans lifecycle
+
+@Service is streyoType of componenet scan
+
+@Controller
+@RequestMapping("/reservations")
+
+@Autowired
+
+
+@GetMapping
+public String getReservation(@RequestParam(value="databse,required=false)
+String dateString, Model model){
+	Date date = dateUtils.createDataFromDateString(dateString);
+	List<RoomReservation> RoomReservation = this.reservationService.getRoomReservationForDate(date);
+	model.addAttribute(s:"roomReservations",roomReservations);
+	return "reservations";
+}
+
+
+Rest Controller
+Used for RESTFUL web servcies
+Spring automatically does mashalling and unmarshalling of data for you
+we can also configure to use XML as desired
+
+
+
+@RestController  : for rest Controller
+
+@RestController
+@RequestMapping("api/reservation")
+public class RoomReservationsServiceController{
+
+
+	@Autowired
+	RoomReservationsService RoomReservationsService;
+
+	@GetMapping						
+	public List<RoomReservation> getRoomReservationForDate(@RequestParam(name="date" , required=false)
+	String dateString){
+
+	}
+
+	@RequestMapping("/roomReservation/{roomId}")
+	public RoomReservation getRoomReservationById(@PathVariable("roomId") string roomId`){
+		return RoomReservationsService.getRoomReservationById(roomId);
+	}
+
+	@RequestMapping(method =RequestMethod.POST , value="/roomReservation")
+	public void addRoomReservation(@ResquestBody RoomReservation roomReservation){
+		RoomReservationsService.addRoomReservation(roomReservation);
+	}
+
+	@RequestMapping(method= RequestMethod.PUT , value="/roomReservation/{roomId}")
+    public void updateRoomReservation(@RequestBodey RoomReservation roomReservation ,@PathVariable String roomId){
+		RoomReservationsService.save(roomReservation);
+	}
+ 
+	@RequestMappping(method=RequestMethod.DELETE ,value="/roomReservation/{roomId}")
+	public void deleteRoomReservation(@PathVariable String roomId){
+		RoomReservationsService.deleteRoomReservation(roomId);
+	}
+}
+
+
+
+/> mvn clean package      //command use to package the spring project
+
+/> java -jar target/<spring-boot.jar>   //command can be used to start spring boot project using jar created by mvn clean package
+
+@EnableAutoConfiguration
+dynamically scanned classes , usually based off jar on class path
+
+//Automatical dynamically scanned configuration before and after methods 
+@AutoConfigureBefore
+@AutoConfigureAfter
+
+//conditional Loading 
+@ConditionalOnClass
+@ConditionalOnBean
+@ConditionalOnProperty
+@ConditionalOnMissingBean
+
+//properties
+default properties for AutoConfiguration classes
+
+@EnabledConfigurationProperties
+properties can always be overriden if wanted
+
+
++++++++++++ how the @SpingBootApplication annotation looks like ++++++++++
+/*
+Basically it has spring boot configuration
+enable auto configuration and componenet scan fordynami configuration n scanning
+*/
+@Target(ElementType.Type)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan(
+	excludeFilters ={
+		@Filter(type = FilterType.CUSTOM , classes = TyperExcludeFilter.class),
+		@Filter(type = FilterType.CUSTOM , classes = AutoConfigurationExcludeFilter.class)})))
+	}
+)
+public @interface SpringBootApplication{
+
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Spring Boot also provide yml support
+spring  boot property files now becomes application.yml files for easier property configuration
+so properties can be felxible based on profiles in yml files
+
+
+++++++++++++++++++++++++++++
+deploying jar for spring boot command with profiles in springApplication.yml
+/> java -jar -Dsping.profiles.active=dev <jarPath>   // this will deploy the jar created using "mvn clena package"
+
+
+==> profiles used for easly 3rd party dependecies
+==> profile also helpful in debug Level changes like DEBUG vs WARN
+==> different Service deployment
+==> internal resource system deployment such as RabbitMq or Kakfka messaging system
+
+
+What comes with web starter project in spring boot
+# download and manges all dependecies and verison so no mistmatch
+# miscture of various compeonents are installed
+# Tomcat comes embedded : can be replace with undertow or Jetty or virgo
+# Default configuration not suecure under tomcat
+# Generally is good to have a proxy gateway to reach web application
+# Spring web comes with Jackson JSON marshallers
+# useful RESTFUL web servcies
+# Automatic marshalling and unmarshalling of json payloads with spring boot web flows
+# Default Logging framework is Slf4j used every where
+# spring boot builds it own logger which can be used easily
+# you can modify Log Level on Slf4j using propertuies in yml or property files
+# Logback or JBoss loggin if required you can use those as well
+# spring libraries : spring boot auto configure Tomcat starter , loogin starter and Boot starter
+# Core spring libararies spring-core spring bean , spring context expression
+# Spring web and spring web mvc libaries comes free as well
+# SnakeYAML : it convert the *.yml file to properties file which can be used during runtime for application
+# Validator you can used bean validatior for spring validatiors : javax and hibernate
+
+
+==> Servelets Filters and Listerners 
+# As Tomcat configuration is very important for servlet and security
+# Spring boot auto configures provide a default servlet for all response at "/"
+
+# you can configure customer servelts by creating them as bean
+# easy way is go to one of the classes and configuring it as @Bean on one of those clasees
+# you can use @WebServlet @WebFilter @WebFilter @WebListener and use compoenent scanning to load the srvelet filter listeners 
+# several application Context and how they are loaded
+# you can use seperate Servlet context using ServletContextInitalizer interface 
+
+# people use Spring security because its hard to initalize spring Servlet context and Filters
+# Property for Servelets using properies file for servlet
+	server.adderss
+	server.productionserver.contextPath
+	Session-base configs 
+	- cookies
+	- timeouts
+	Compression 
+	- server.compression.enabled=true 
+	- all Responses must be 2048 bytes to compress by default
+	- Default responses type text/html , tex/xml , text/plain , text/css will be compressed by default
+
+	- http to TLS/SSL configuration by default is encrypted
+	- need java keystore that contains certficate
+	- properties used to configure
+	- secure configuration management using vault using forward
+	=> SSl is secure scoket layer currenlty use SSL 3.0
+	=> TLS transport Layer Security : encrpyts internaet traffic of all types https:
+	ofent lumped togther as SSL/TLS
+	
+	SSL : uses asymmetical cryptography with public and private key 
+	public key to encrypt amd private key to decrypt data
+	keys are generated by comples mathematical formula 
+
+	TLS uses assymeteric cryptography at begning for setting up single communication session and
+	then a single sared key is used to encrypt all the data.
+	This is called SSL handsake is done using SSL certificates 
+
+	Certificate are issue by certificate authorities CA's , use to prevent man in the middle attacks
+	SSL certificates are called X.509 
+
+#With java JDK comes free keytool to generate keys and keystores
+#keytool is use to generate SSL certificate and used for certificate exchnage
+$ keytool -genkey -keyalig RSA -alias linkedin -keystore.ks -storepass password -validity 2048
+
+#the key Store is generated and kept in the classpath for sceutiry filter for SSL certificates
+
+
+curl command you can skip SSL certificate verification for https protocol to skip 
+
+$curl http -verify=nul hhtps://localhost:8080/api/greetings
+
+
+org.springframework.boot.autoconfigure.web.ServerProperties  :: has default properties
+
+
++++++++++++++++++++++
+Consume microservice or REST api
+==> you need REST template
+RestTemplate RestTemplate = new RestTemplate();
+RestTemplate.getForObject("URL",<SomeClassName>.class);
+
+List<Movie> movies = RestTemplate.getForObject("URL",Movie.class);
+
+==> getForObject does unmarshalling you 
+
+==> for Java to to do unmarsalling you must expilictly provide and empty constructor
+
+@Bean is procedure to produce bean 
+@Component is also producer
+@Controller is also a producer
+@Service is aldo a producer
+@RestController is also a producer
+@Autowire is consumer 
+
+@RequestMapping("/mappingBasePath") 
+@RequestMapping("/users/{userId}")
+@RequestParam Object requetsObject
+@RequestParam Filter requestFilter
+@RequestParam Sorter sorter
+
+@RequestMapping("/users/{userId}")
+publci Rating getrating(@PathVariable("userId) string userId)
+
+REST TEMPLATE is going to be dericated :
+
+web client will replace it as reactive async programming
+
+WebClient.Builder = WebClient.builder();
+
+
+create webBuilder bean
+@Bean
+WebBuilder getWebBuilder(){
+	WebBuilder builder = WebClient.builder();
+	return builder;
+}
+
+Movie movie =webClientBuilder.build()
+.get()
+.uri("http://localhost:8082/movies/"+ movieId)
+.retrvie()
+.bodyToMono(movie.class)
+.block();   //block is making it a blocking call 
+
+// converting movie stream async 
+
+Mono ==> promise of object in future 
+
++++++++++++++++++++++++
+
+==> Object Wrapper in api response is important 
+
+
+++++++++++++++++++
+==> you can add api key to properties value and read it if you want
+
+example
+spring.application.name=mocie-info-Service
+server.port=8082
+
+api.key=cbjasjcbalbcl8121klndlkc
+
++++++++++++++++++++++
+
+
+Another way of running spring Boot application
+
+@SpringBootApplication
+public Class springBoot{
+
+	public static void main(String[] args){
+		springApplication.run(springBoot.class, args);
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

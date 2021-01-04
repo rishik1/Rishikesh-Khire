@@ -1,0 +1,70 @@
+Design fundamentals
+
+Client Server Model
+Client --> DNS query --> get Ip address --> Makes reuest to Server
+So DNS server must be reachable if internal/private local DNS server must be set up.
+
+install dig utils 
+sudo yum install bind-utils 
+/> dig command used to do a dns query to find the ipaddress of server if you know the url or hostname
+
+browser/clients send http/https request to server by getting dig command ipAddress use it to send request.
+Server ports are opened to listen ti requests from server.
+
+http use port 80
+https uses port 443 univesally decided long time age
+
+use netcat command for port and ip address tests also called nc commmand
+yum install nmap-ncat.x86_64 //centos
+
+server opens port and listens using nc command
+~rkhire$ nc -l 9017
+hi this is an example for network port open
+
+Anything type on client using nc command is show on sevrer as well
+~rkihre$ nc 127.0.0.1 9017
+hi this is an example for network port open
+
+
+NETWORK PROTOCOLS
+Ip : internet protocol
+    IP Header(bytes): source Ip Address + Destination Ip Address + Total Size of Packet + internet Protocol version its using
+
+TCP : Transmission Control protocol
+    build on top of IP protocol
+    TCP connection created using Handsake protocol ( client requests , server responds ok + client responds connnection created) ==> timeouts
+    Ordered and srtructure Ip packets transfer 
+    Error free (corrupt free , resend failed packets)
+    uses multiple Ip packets for sending large amount of data
+    TCP Header : Ordering information + checksum
+
+HTTP: Hyper Text transfer protocol
+     Build on top of TCP
+     request response paradigm easy to use
+
+
+Latency Design:
+    Distance between server and client directly proportinl to Latency
+    memory is faster than SSD and SSD faster than HDD and HDD is faser than over network
+
+
+Availability Design:
+    How well is System fault tolerence
+    Operational enough that primary functions are satisfied
+    percentage of System uptime over the year 99.99% and product may not survive.
+    Nines in availability - 2 nines = 99%  , 3 nines = 99.9% , 4 nines = 99.99%
+
+    Go to Availability_Design.png for time over year to percentage availablity  chart.
+
+
+
+
+    
+
+
+
+
+
+
+
+
