@@ -1,0 +1,27 @@
+docker-compose -f mongo.yaml up ==> starts all containers in the compose fie
+docker-compose -f mongo.yaml down  ==> down will shut down all the containers and network as well ( check useing docker network ls)
+
+
+docker network prune ==> remove all unused networks
+docker network rm 
+
++++++++++++++++++++++++++
+docker file
+
+FROM node   ==> install node
+
+ENV MONGO_DB_USERNAME=admin\       ==>ENV set environmental variable
+    MONGO_DB_PWD=password
+
+RUN mkdir -p /home/app               ==> run any linux command
+
+COPY . /home/app                     ==> cpy commands executes on hosts  from hosts inside of container
+
+CMD["node","server.js"]              ==> start app with node server.js   CMD is entry point command that marks docker file you want this command to be entry point
+
+
+
+
+
+
+

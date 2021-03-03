@@ -39,7 +39,8 @@ def main():
     print(len(cities))
 
     #tuples works exactly like list but they cant be changed
-    
+
+    sports =('' ,'' , '')
 
 
 
