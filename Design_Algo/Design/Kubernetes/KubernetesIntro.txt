@@ -1,0 +1,9 @@
+Kubernetes
+- open source container orchestration tool
+- google's open source
+- Aovid monolith and use microservices
+- managing container using scripts is very complex
+- High Availablity and no down time
+- Scalability and performance
+- Disaster recovery
+- 
