@@ -14,3 +14,7 @@ In dockerfile
 
       -(named docker volume) : path inside the container
 
+
+Docker swarm is light weight ,Manual scaling , needs 3rd party monitoring mechanism
+
+
