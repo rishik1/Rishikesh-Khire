@@ -5,5 +5,54 @@ Kubernetes
 - managing container using scripts is very complex
 - High Availablity and no down time
 - Scalability and performance
-- Disaster recovery
-- 
+- Disaster recovery so no data is lost
+
+Kubernetes Componenets
+Pod : 
+- abstraction over container , smallest unit of k8s , 1 application per Pod
+- each Pod gets its own IP address in virtual network
+- Pods can die easily i.e ephimeral and a new one will be created and probably will get new IP address
+
+Service:
+- permenant or static ip address is attached to a Pod.
+- lifecycle of Pod and Service not connnected so IP address remains same 
+- External Service (Ingress) or Internal Service
+
+Ingress
+- external service which is used for external API calls and forwaded to internal service , basically mask the ip address and port like api forwarding
+- use application property file to configure or some build file and push to repo
+
+ConfigMap:
+- external configuration of your application 
+- on the fly you can change the config map instead of building and creating new image in repo to deploy
+- never push credentials in confg map 
+- Secret ::::: use this to storage credentials hidden bas64 encoded build in security
+- Pod can read from secret directly when connnected
+
+Data Storage (Volumes):
+- used for persistence of data for lon term
+- attaching physical storage disk to Pod is mounted and used
+
+Replica:
+- clone of application is run using the same service
+- service is a load balancer and forward to whichever POD is ready to serve the request
+- blue print for pods you can decide how many replicas you need to run
+
+Deployment:
+- blue print of the application ,how many services , Pods and replicas ==> all STATE LESS
+- you can scale up and scale down
+- abstraction on top of pods help replicas and scal up and down
+- DB can't be replicated via deployment as the DB is stateful to avoid in consistency ==> hence stateful Set 
+
+StatefulSet :
+- State full deployment
+- usually used for DB replicas to maintain state and avoid inconsistency
+- scale up and down but Read and writes are SYNCRONIZED
+- difficult or performance issues 
+- Robust setups resilient 
+
+
+
+
+
+
